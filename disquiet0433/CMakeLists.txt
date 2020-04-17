@@ -14,16 +14,31 @@ set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_EXTENSIONS false)
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable( feedback_drums
-  feedback_drums.cpp )
+add_executable( dq0433
+  dq0433.cpp )
 
-add_custom_target( run_drums )
-add_dependencies( run_drums feedback_drums )
+target_compile_options( dq0433
+  PRIVATE
+  -Werror
+  )
+
+# I should really do sndfile properly here.
+target_include_directories( dq0433
+  PRIVATE
+  /usr/local/include
+  )
+target_link_options( dq0433
+  PRIVATE
+  -L/usr/local/lib
+  -lsndfile )
+
+add_custom_target( run_dq )
+add_dependencies( run_dq dq0433 )
 add_custom_command(
-  TARGET run_drums
+  TARGET run_dq
   POST_BUILD
   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 
-  COMMAND Release/feedback_drums
+  COMMAND Release/dq0433
   )
                 
