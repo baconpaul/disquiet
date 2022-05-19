@@ -23,22 +23,17 @@ target_compile_options( dq0433
   )
 
 # I should really do sndfile properly here.
+include(FindPackageHandleStandardArgs)
+
+find_path(LIBSNDFILE_INCLUDE_DIRS sndfile.h)
+find_library(LIBSNDFILE_LIBRARIES sndfile)
+
 target_include_directories( dq0433
   PRIVATE
-  /usr/local/include
+  ${LIBSNDFILE_INCLUDE_DIRS}
   )
 target_link_options( dq0433
   PRIVATE
-  -L/usr/local/lib
-  -lsndfile )
+  ${LIBSNDFILE_LIBRARIES} )
 
-add_custom_target( run_dq )
-add_dependencies( run_dq dq0433 )
-add_custom_command(
-  TARGET run_dq
-  POST_BUILD
-  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-
-  COMMAND Release/dq0433
-  )
                 

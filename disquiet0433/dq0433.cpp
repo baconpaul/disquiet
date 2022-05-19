@@ -34,7 +34,7 @@ struct algo_CombOnSweep
     float tap = SAMPLERATE / 440.0;
     float t;
 
-    float restart() { t = 0; std::cout << "TAP=" << tap << std::endl; }
+    float restart() { t = 0; std::cout << "TAP=" << tap << std::endl; return 0;}
     bool hasNext() { return t < 3; }
     float next() {
         t += SAMPLERATE_INV;
@@ -55,7 +55,7 @@ struct algo_Chirp
     float tap0 = SAMPLERATE / 440.0;
     float priorsample = 0;
     
-    float restart() { t = 0; priorsample = 0; }
+    float restart() { t = 0; priorsample = 0; return 0; }
     bool hasNext() { return t < 3; }
     float next() {
         t += SAMPLERATE_INV;
